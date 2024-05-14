@@ -11,6 +11,8 @@ import { Types } from "mongoose";
 export interface UserServiceInterface {
     findAll: () => Promise<GetUserDto | RequestError>
     find: (id: Types.ObjectId) => Promise<User | RequestError>
+    findByUsername: (username: string) => Promise<User | RequestError>
+    findByEmail: (email: string) => Promise<User | RequestError>
     save: (input: CreateUserDto) => Promise<User | RequestError>
     update: (id: Types.ObjectId, input: UpdateUserDto) => Promise<User | RequestError>
     remove: (id: Types.ObjectId) => Promise<void | RequestError>
@@ -35,6 +37,14 @@ export class UserService implements UserServiceInterface {
 
     public async find(id: Types.ObjectId): Promise<User | RequestError> {
         return await this.repository.find(id);
+    }
+
+    public async findByUsername(username: string): Promise<User | RequestError> {
+        return await this.repository.findByUsername(username);
+    }
+
+    public async findByEmail(email: string): Promise<User | RequestError> {
+        return await this.repository.findByEmail(email);
     }
 
     public async save(input: CreateUserDto): Promise<User | RequestError> {

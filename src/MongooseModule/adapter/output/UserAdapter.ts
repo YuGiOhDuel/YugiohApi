@@ -8,6 +8,8 @@ import { Model, Types } from "mongoose";
 export interface UserAdapterInterface {
     findAll: () => Promise<User[] | RequestError>
     find: (id: Types.ObjectId) => Promise<User | RequestError>
+    findByUsername: (username: string) => Promise<User | RequestError>
+    findByEmail: (email: string) => Promise<User | RequestError>
     save: (input: Omit<User, '_id'>) => Promise<User | RequestError>
     update: (id: Types.ObjectId, input: UpdateUserDto) => Promise<User | RequestError>
     remove: (id: Types.ObjectId) => Promise<void | RequestError>
@@ -33,6 +35,24 @@ export class UserAdapter implements UserAdapterInterface {
     public async find(id: Types.ObjectId): Promise<User | RequestError> {
         try {
             return await this.userModel.findById(id);   
+        }
+        catch (error) {
+            return new RequestError(error.message);
+        }
+    }
+
+    public async findByUsername(username: string): Promise<User | RequestError> {
+        try {
+            return await this.userModel.findOne({ username }).exec();   
+        }
+        catch (error) {
+            return new RequestError(error.message);
+        }
+    }
+
+    public async findByEmail(email: string): Promise<User | RequestError> {
+        try {
+            return await this.userModel.findOne({ email }).exec();   
         }
         catch (error) {
             return new RequestError(error.message);
