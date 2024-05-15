@@ -1,28 +1,43 @@
+import { CardController } from "./adapter/input/CardController";
 import { UserController } from "./adapter/input/UserController";
-import { AuthGuards } from "src/AuthModule/adapter/AuthGuards";
 import { AuthProviders } from "src/AuthModule/AuthProviders";
 import { MongooseDbProviders } from "./MongooseDbProviders";
+import { CardAdapter } from "./adapter/output/CardAdapter";
 import { UserAdapter } from "./adapter/output/UserAdapter";
+import { CardService } from "./domain/CardService";
 import { UserService } from "./domain/UserService";
 import { MongooseModule } from "@nestjs/mongoose";
+import { JwtService } from "@nestjs/jwt";
 import { Module } from "@nestjs/common";
+import {
+    Card, 
+    CardSchema 
+} from "./schema/Card";
 import {
     User,
     UserSchema
 } from "./schema/User";
-import { JwtService } from "@nestjs/jwt";
 
 @Module({
     imports: [
         MongooseModule.forFeature([
-            { name: User.name, schema: UserSchema }
+            { name: Card.name, schema: CardSchema },
+            { name: User.name, schema: UserSchema },
         ]),
         
     ],
     controllers: [
-        UserController
+        CardController, UserController
     ],
     providers: [
+        {
+            provide: MongooseDbProviders.CARD_ADAPTER,
+            useClass: CardAdapter
+        },
+        {
+            provide: MongooseDbProviders.CARD_SERVICE,
+            useClass: CardService
+        },
         {
             provide: AuthProviders.JWT_SERVICE,
             useClass: JwtService

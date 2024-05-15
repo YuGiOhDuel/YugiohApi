@@ -1,4 +1,6 @@
 export enum MongooseDbProviders {
+    CARD_ADAPTER = "CARD_ADAPTER", 
+    CARD_SERVICE = "CARD_SERVICE", 
     USER_ADAPTER = "USER_ADAPTER",
     USER_SERVICE = "USER_SERVICE",
 }
