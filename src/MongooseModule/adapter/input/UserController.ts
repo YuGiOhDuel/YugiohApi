@@ -7,6 +7,7 @@ import { GetUserDto } from "./dto/GetUserDto";
 import { User } from "../../schema/User";
 import { Types } from "mongoose";
 import {
+    ApiBearerAuth,
     ApiBody,
     ApiParam,
     ApiResponse,
@@ -22,8 +23,10 @@ import {
     Param,
     Patch,
     Post,
+    UseGuards,
     ValidationPipe
 } from "@nestjs/common";
+import { AuthGuards } from "src/AuthModule/adapter/AuthGuards";
 
 @Controller("/user")
 @ApiTags("User")
@@ -42,6 +45,8 @@ export class UserController {
         status: 500,
         type: RequestError
     })
+    @UseGuards(AuthGuards)
+    @ApiBearerAuth()
     public async getAll(): Promise<GetUserDto | RequestError> {
         return await this.service.findAll();
     }
