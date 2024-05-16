@@ -3,9 +3,11 @@ import { CardController } from "./adapter/input/CardController";
 import { UserController } from "./adapter/input/UserController";
 import { AuthProviders } from "src/AuthModule/AuthProviders";
 import { CardEventService } from "./domain/CardEventService";
+import { LobbyAdapter } from "./adapter/output/LobbyAdapter";
 import { MongooseDbProviders } from "./MongooseDbProviders";
 import { CardAdapter } from "./adapter/output/CardAdapter";
 import { UserAdapter } from "./adapter/output/UserAdapter";
+import { LobbyService } from "./domain/LobbyService";
 import { CardService } from "./domain/CardService";
 import { UserService } from "./domain/UserService";
 import { MongooseModule } from "@nestjs/mongoose";
@@ -15,6 +17,10 @@ import {
     CardEvent,
     CardEventSchema
 } from "./schema/CardEvent";
+import {
+    Lobby,
+    LobbySchema
+} from "./schema/Lobby";
 import {
     Card, 
     CardSchema 
@@ -29,6 +35,7 @@ import {
         MongooseModule.forFeature([
             { name: Card.name, schema: CardSchema },
             { name: CardEvent.name, schema: CardEventSchema },
+            { name: Lobby.name, schema: LobbySchema },
             { name: User.name, schema: UserSchema },
         ]),
         
@@ -56,6 +63,14 @@ import {
         {
             provide: AuthProviders.JWT_SERVICE,
             useClass: JwtService
+        },
+        {
+            provide: MongooseDbProviders.LOBBY_ADAPTER,
+            useClass: LobbyAdapter
+        },
+        {
+            provide: MongooseDbProviders.LOBBY_SERVICE,
+            useClass: LobbyService
         },
         {
             provide: MongooseDbProviders.USER_ADAPTER,
