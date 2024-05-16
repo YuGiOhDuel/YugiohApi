@@ -5,11 +5,11 @@ import { Model, Types } from 'mongoose';
 import { RequestError } from "src/types/RequestError";
 
 export interface CardEventAdapterInterface {
-    findAll(): Promise<CardEvent[] | RequestError>
-    find(id: Types.ObjectId): Promise<CardEvent | RequestError>
-    save(input: Omit<CardEvent, '_id'>): Promise<CardEvent | RequestError>
-    update(id: Types.ObjectId, input: Partial<CardEvent>): Promise<CardEvent | RequestError>
-    remove(id: Types.ObjectId): Promise<CardEvent | RequestError>
+    findAll: () => Promise<CardEvent[] | RequestError>
+    find: (id: Types.ObjectId) => Promise<CardEvent | RequestError>
+    save: (input: Omit<CardEvent, '_id'>) => Promise<CardEvent | RequestError>
+    update: (id: Types.ObjectId, input: Partial<CardEvent>) => Promise<CardEvent | RequestError>
+    remove: (id: Types.ObjectId) => Promise<CardEvent | RequestError>
 }
 
 @Injectable()

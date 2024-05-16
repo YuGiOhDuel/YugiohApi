@@ -16,10 +16,8 @@ export type CardDocument = HydratedDocument<Card>;
 
 @Schema({ collection: "Card" })
 export class Card {
-    @ApiProperty({ type: Types.ObjectId })
-    @Prop({ type: Types.ObjectId })
-    _id: Types.ObjectId
-
+    _id: String;
+    
     @ApiProperty({ type: String })
     @Prop()
     name: string;
@@ -37,7 +35,7 @@ export class Card {
         enum: CardFunction
     })
     @Prop()
-    fucntion: CardFunction;
+    function: CardFunction;
 
     @ApiProperty({
         type: String,

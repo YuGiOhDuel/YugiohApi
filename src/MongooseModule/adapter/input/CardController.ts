@@ -9,6 +9,7 @@ import { Types } from "mongoose";
 import {
     ApiBody,
     ApiParam,
+    ApiQuery,
     ApiResponse,
     ApiTags
 } from "@nestjs/swagger";
@@ -21,6 +22,7 @@ import {
     Param,
     Patch,
     Post,
+    Query,
     ValidationPipe
 } from "@nestjs/common";
 
@@ -48,7 +50,7 @@ export class CardController {
     @Get("/:id")
     @ApiParam({
         name: 'id',
-        type: Types.ObjectId
+        type: String
     })
     @ApiResponse({
         status: 200,
@@ -65,6 +67,10 @@ export class CardController {
     }
 
     @Post("/")
+    @ApiQuery({
+        name: 'userId',
+        type: String,
+    })
     @ApiBody({ type: CreateCardDto })
     @ApiResponse({
         status: 201,
@@ -75,16 +81,21 @@ export class CardController {
         type: RequestError
     })
     public async post(
+        @Query('userId') userId: Types.ObjectId,
         @Body(new ValidationPipe()) input: CreateCardDto
     ): Promise<Card | RequestError> {
-        return await this.service.save(input);
+        return await this.service.save(input, userId);
     }
 
     @Patch("/:id")
     @ApiBody({ type: UpdateCardDto })
     @ApiParam({
         name: 'id',
-        type: Types.ObjectId
+        type: String
+    })
+    @ApiQuery({
+        name: 'userId',
+        type: String,
     })
     @ApiResponse({
         status: 201,
@@ -96,13 +107,21 @@ export class CardController {
     })
     public async patch(
         @Param('id') id: Types.ObjectId,
+        @Query('userId') userId: Types.ObjectId,
         @Body(new ValidationPipe()) input: UpdateCardDto
     ): Promise<Card | RequestError> {
-        return await this.service.upload(id, input);
+        return await this.service.upload(id, input, userId);
     }
 
     @Delete("/:id")
-    @ApiBody({ type: UpdateCardDto })
+    @ApiParam({
+        name: 'id',
+        type: String
+    })
+    @ApiQuery({
+        name: 'userId',
+        type: String,
+    })
     @ApiResponse({
         status: 200,
         type: Card
@@ -111,7 +130,10 @@ export class CardController {
         status: 500,
         type: RequestError
     })
-    public async delete(id: Types.ObjectId): Promise<Card | RequestError> {
-        return await this.service.remove(id);
+    public async delete(
+        @Param('id') id: Types.ObjectId,
+        @Query('userId') userId: Types.ObjectId
+    ): Promise<Card | RequestError> {
+        return await this.service.remove(id, userId);
     }
 }

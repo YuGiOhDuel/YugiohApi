@@ -17,7 +17,7 @@ export class CreateCardDto {
         type: String,
         enum: CardFunction
     })
-    fucntion: CardFunction;
+    function: CardFunction;
 
     @ApiProperty({
         type: String,

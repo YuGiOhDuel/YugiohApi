@@ -1,5 +1,6 @@
 import { UserServiceInterface } from "src/MongooseModule/domain/UserService";
 import { MongooseDbProviders } from "../../MongooseDbProviders";
+import { AuthGuards } from "src/AuthModule/adapter/AuthGuards";
 import { RequestError } from "src/types/RequestError";
 import { CreateUserDto } from "./dto/CreateUserDto";
 import { UpdateUserDto } from "./dto/UpdateUserDto";
@@ -26,7 +27,6 @@ import {
     UseGuards,
     ValidationPipe
 } from "@nestjs/common";
-import { AuthGuards } from "src/AuthModule/adapter/AuthGuards";
 
 @Controller("/user")
 @ApiTags("User")
@@ -54,7 +54,7 @@ export class UserController {
     @Get("/:id")
     @ApiParam({
         name: 'id',
-        type: Types.ObjectId
+        type: String
     })
     @ApiResponse({
         status: 200,
@@ -91,7 +91,7 @@ export class UserController {
     @ApiBody({ type: UpdateUserDto })
     @ApiParam({
         name: 'id',
-        type: Types.ObjectId
+        type: String
     })
     @ApiResponse({
         status: 201,
@@ -112,7 +112,7 @@ export class UserController {
     @Delete("/:id")
     @ApiParam({
         name: 'id',
-        type: Types.ObjectId
+        type: String
     })
     @ApiResponse({
         status: 204,

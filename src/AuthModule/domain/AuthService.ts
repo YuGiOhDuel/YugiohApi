@@ -55,7 +55,8 @@ export class AuthService implements AuthServiceInterface {
         }, { secret: Constants.secret });
 
         return {
-            token: token
+            token: token,
+            _id: user._id
         }
     }
 

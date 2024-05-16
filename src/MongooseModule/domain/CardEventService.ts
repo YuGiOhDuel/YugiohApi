@@ -9,11 +9,11 @@ import { CardEvent } from "../schema/CardEvent";
 import { Types } from "mongoose";
 
 export interface CardEventServiceInterface {
-    findAll(): Promise<GetCardEventDto | RequestError>
-    find(id: Types.ObjectId): Promise<CardEvent | RequestError>
-    save(input: CreateCardEventDto): Promise<CardEvent | RequestError>
-    update(id: Types.ObjectId, input: UpdateCardEventDto): Promise<CardEvent | RequestError>
-    remove(id: Types.ObjectId): Promise<CardEvent | RequestError>
+    findAll: () => Promise<GetCardEventDto | RequestError>
+    find: (id: Types.ObjectId) => Promise<CardEvent | RequestError>
+    save: (input: CreateCardEventDto) => Promise<CardEvent | RequestError>
+    update: (id: Types.ObjectId, input: UpdateCardEventDto) => Promise<CardEvent | RequestError>
+    remove: (id: Types.ObjectId) => Promise<CardEvent | RequestError>
 }
 
 @Injectable()
@@ -23,5 +23,32 @@ export class CardEventService implements CardEventServiceInterface {
         private readonly adapter: CardEventAdapterInterface
     ) {  }
 
+    public async findAll(): Promise<GetCardEventDto | RequestError> {
+        const data = await this.adapter.findAll();
+        if (data instanceof RequestError) {
+            return data;
+        }
+        return {
+            cardEvent: data
+        }
+    }
 
+    public async find(id: Types.ObjectId): Promise<CardEvent | RequestError> {
+        return await this.adapter.find(id);
+    }
+
+    public async save(input: CreateCardEventDto): Promise<CardEvent | RequestError> {
+        return await this.adapter.save({
+            ...input,
+            date: new Date()
+        });
+    }
+
+    public async update(id: Types.ObjectId, input: UpdateCardEventDto): Promise<CardEvent | RequestError> {
+        return await this.adapter.update(id, input);
+    }
+
+    public async remove(id: Types.ObjectId): Promise<CardEvent | RequestError> {
+        return await this.adapter.remove(id);
+    }
 }
