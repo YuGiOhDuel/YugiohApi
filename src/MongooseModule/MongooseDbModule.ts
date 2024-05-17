@@ -1,4 +1,5 @@
 import { CardEventAdapter } from "./adapter/output/CardEventAdapter";
+import { LobbyController } from "./adapter/input/LobbyController";
 import { CardController } from "./adapter/input/CardController";
 import { UserController } from "./adapter/input/UserController";
 import { AuthProviders } from "src/AuthModule/AuthProviders";
@@ -41,7 +42,7 @@ import {
         
     ],
     controllers: [
-        CardController, UserController
+        CardController, LobbyController, UserController
     ],
     providers: [
         {
