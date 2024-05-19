@@ -7,7 +7,8 @@ export type LobbyDocument = HydratedDocument<Lobby>;
 
 @Schema({ collection: "Lobby" })
 export class Lobby {
-    _id: string;
+    @ApiProperty({ type: String })
+    _id: String;
 
     @ApiProperty({ type: String })
     @Prop()
@@ -24,22 +25,22 @@ export class Lobby {
     @Prop()
     havePassword: boolean;
 
-    @ApiProperty({ type: User })
+    @ApiProperty({ type: String })
     @Prop({
         type: Types.ObjectId,
         ref: User.name
     })
-    creator: User;
+    creator: String;
 
     @ApiProperty({
-        type: User,
+        type: String,
         nullable: true
     })
     @Prop({
         type: Types.ObjectId,
         ref: User.name
     })
-    opponent?: User;
+    opponent?: String;
 
     @ApiProperty({ type: Date })
     @Prop()

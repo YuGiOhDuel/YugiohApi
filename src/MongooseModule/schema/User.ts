@@ -6,6 +6,7 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema({ collection: "User" })
 export class User {
+    @ApiProperty({ type: String })
     _id: String;
     
     @ApiProperty({ type: String })

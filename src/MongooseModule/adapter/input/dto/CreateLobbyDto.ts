@@ -1,4 +1,3 @@
-import { User } from "src/MongooseModule/schema/User";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateLobbyDto {
@@ -11,6 +10,6 @@ export class CreateLobbyDto {
     })
     password?: string;
 
-    @ApiProperty({ type: User })
-    creator: User;
+    @ApiProperty({ type: String })
+    creator: String;
 }

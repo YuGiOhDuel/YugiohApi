@@ -16,6 +16,7 @@ export type CardDocument = HydratedDocument<Card>;
 
 @Schema({ collection: "Card" })
 export class Card {
+    @ApiProperty({ type: String })
     _id: String;
     
     @ApiProperty({ type: String })

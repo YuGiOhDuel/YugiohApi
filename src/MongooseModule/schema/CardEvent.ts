@@ -14,6 +14,7 @@ export enum CardEventType {
 
 @Schema({ collection: "CardEvent" })
 export class CardEvent {
+    @ApiProperty({ type: String })
     _id: String;
 
     @ApiProperty({ type: Card })
