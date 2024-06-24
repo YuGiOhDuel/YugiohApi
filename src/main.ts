@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
   const config = new DocumentBuilder()
   .setTitle('Cats example')
@@ -17,8 +18,7 @@ async function bootstrap() {
     scheme: 'Bearer',
     type: 'http', // I`ve attempted type: 'apiKey' too
     in: 'Header'
-  })
-  .build();
+  }).build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 

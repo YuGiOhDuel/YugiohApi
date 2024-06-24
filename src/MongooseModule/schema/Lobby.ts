@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Types } from "mongoose";
 import { ApiProperty } from "@nestjs/swagger";
-import { User } from "./User";
+import { LobbyUser } from "./LobbyUser";
 
 export type LobbyDocument = HydratedDocument<Lobby>;
 
@@ -28,7 +28,7 @@ export class Lobby {
     @ApiProperty({ type: String })
     @Prop({
         type: Types.ObjectId,
-        ref: User.name
+        ref: LobbyUser.name
     })
     creator: String;
 
@@ -38,7 +38,7 @@ export class Lobby {
     })
     @Prop({
         type: Types.ObjectId,
-        ref: User.name
+        ref: LobbyUser.name
     })
     opponent?: String;
 

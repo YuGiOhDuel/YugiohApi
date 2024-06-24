@@ -1,10 +1,13 @@
+import { LobbyUserController } from "./adapter/input/LobbyUserController";
 import { CardEventAdapter } from "./adapter/output/CardEventAdapter";
+import { LobbyUserAdapter } from "./adapter/output/LobbyUserAdapter";
 import { LobbyController } from "./adapter/input/LobbyController";
 import { CardController } from "./adapter/input/CardController";
 import { UserController } from "./adapter/input/UserController";
 import { AuthProviders } from "src/AuthModule/AuthProviders";
 import { CardEventService } from "./domain/CardEventService";
 import { LobbyAdapter } from "./adapter/output/LobbyAdapter";
+import { LobbyUserService } from "./domain/LobbyUserService";
 import { MongooseDbProviders } from "./MongooseDbProviders";
 import { CardAdapter } from "./adapter/output/CardAdapter";
 import { UserAdapter } from "./adapter/output/UserAdapter";
@@ -18,6 +21,10 @@ import {
     CardEvent,
     CardEventSchema
 } from "./schema/CardEvent";
+import {
+    LobbyUser,
+    LobbyUserSchema
+} from "./schema/LobbyUser";
 import {
     Lobby,
     LobbySchema
@@ -37,12 +44,12 @@ import {
             { name: Card.name, schema: CardSchema },
             { name: CardEvent.name, schema: CardEventSchema },
             { name: Lobby.name, schema: LobbySchema },
+            { name: LobbyUser.name, schema: LobbyUserSchema },
             { name: User.name, schema: UserSchema },
         ]),
-        
     ],
     controllers: [
-        CardController, LobbyController, UserController
+        CardController, LobbyController, LobbyUserController, UserController
     ],
     providers: [
         {
@@ -72,6 +79,14 @@ import {
         {
             provide: MongooseDbProviders.LOBBY_SERVICE,
             useClass: LobbyService
+        },
+        {
+            provide: MongooseDbProviders.LOBBY_USER_ADAPTER,
+            useClass: LobbyUserAdapter
+        },
+        {
+            provide: MongooseDbProviders.LOBBY_USER_SERVICE,
+            useClass: LobbyUserService
         },
         {
             provide: MongooseDbProviders.USER_ADAPTER,
